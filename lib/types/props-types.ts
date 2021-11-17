@@ -2,7 +2,7 @@
  * @author dajun.jiang
  * @description props type 定义
  */
-import { PropType } from 'vue'
+import { PropType, defineComponent } from 'vue'
 export enum SchemaTypes {
   'NUMBER' = 'number',
   'INTEGER' = 'integer',
@@ -15,24 +15,40 @@ type SchemaRef = { $ref: string }
 
 // type Schema = any
 export interface Schema {
-  type: SchemaTypes | string
+  type?: SchemaTypes | string
   const?: any
   format?: string
+
+  title?: string
   default?: any
+
   properties?: {
-    [key: string]: Schema | { $ref: string }
+    [key: string]: Schema
   }
   items?: Schema | Schema[] | SchemaRef
+  uniqueItems?: any
   dependencies?: {
     [key: string]: string[] | Schema | SchemaRef
   }
   oneOf?: Schema[]
+  anyOf?: Schema[]
+  allOf?: Schema[]
+  // TODO: uiSchema
   // vjsf?: VueJsonSchemaConfig
   required?: string[]
   enum?: any[]
+  enumNames?: any[]
   enumKeyValue?: any[]
   additionalProperties?: any
   additionalItems?: Schema
+
+  minLength?: number
+  maxLength?: number
+  minimun?: number
+  maximum?: number
+  multipleOf?: number
+  exclusiveMaximum?: number
+  exclusiveMinimum?: number
 }
 
 export const FiledPropsDefine = {
@@ -47,4 +63,14 @@ export const FiledPropsDefine = {
     type: Function as PropType<(v: any) => void>,
     required: true,
   },
+  rootSchema: {
+    type: Object as PropType<Schema>,
+    required: true,
+  },
 } as const
+
+export const TypeHelperComponent = defineComponent({
+  props: FiledPropsDefine,
+})
+
+export type CommonFieldType = typeof TypeHelperComponent

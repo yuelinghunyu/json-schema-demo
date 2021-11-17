@@ -171,6 +171,7 @@ export default defineComponent({
             <div class={classes.form}>
               <PCEngineForm
                 schema={view.schema}
+                rootSchema={view.schema}
                 onChange={handleChange}
                 value={view.data}
               ></PCEngineForm>
