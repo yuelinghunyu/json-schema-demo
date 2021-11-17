@@ -2,6 +2,7 @@ import { defineComponent, Ref, ref, reactive, watchEffect } from 'vue'
 import { createUseStyles } from 'vue-jss'
 import ViewEditor from './components/viewEditor'
 import views from './view/index'
+import PCEngineForm from '../lib/index'
 
 type Schema = any
 type UISchema = any
@@ -167,7 +168,13 @@ export default defineComponent({
                 />
               </div>
             </div>
-            <div class={classes.form}>xxx</div>
+            <div class={classes.form}>
+              <PCEngineForm
+                schema={view.schema}
+                onChange={handleChange}
+                value={view.data}
+              ></PCEngineForm>
+            </div>
           </div>
         </div>
       )
