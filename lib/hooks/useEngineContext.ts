@@ -1,4 +1,4 @@
-import { inject, reactive } from 'vue'
+import { inject } from 'vue'
 
 import { CommonFieldType } from '../types/props-types'
 

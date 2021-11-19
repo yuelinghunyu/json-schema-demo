@@ -4,6 +4,7 @@ import { Schema, SchemaTypes, FiledPropsDefine } from '../types/props-types'
 import InputNumber from './input/inputNumber.vue'
 import InputSting from './input/inputString'
 import ObjectField from './object/ObjectField'
+import ArrayField from './object/ArrayField'
 
 import { retrieveSchema } from '../utils/transform'
 
@@ -17,9 +18,8 @@ export default defineComponent({
     })
 
     return () => {
-      const { schema, rootSchema, value } = props
+      const { schema } = props
       const retrievedSchema = retrievedSchemaRef.value
-      console.log(retrievedSchema)
       const type = schema.type
       let Component: any
 
@@ -34,6 +34,10 @@ export default defineComponent({
         }
         case SchemaTypes.OBJECT: {
           Component = ObjectField
+          break
+        }
+        case SchemaTypes.ARRAY: {
+          Component = ArrayField
           break
         }
         default: {

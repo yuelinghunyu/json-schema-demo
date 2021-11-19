@@ -22,7 +22,6 @@ export default defineComponent({
       const { EngineFormItem } = context
       const properties = schema.properties || {}
       const currentValue: any = isObject(value) ? value : {}
-
       return Object.keys(properties).map((k: string, index: number) => (
         <EngineFormItem
           schema={properties[k]}

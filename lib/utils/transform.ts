@@ -6,15 +6,15 @@ import jsonpointer from 'jsonpointer'
 import union from 'lodash.union'
 import mergeAllOf from 'json-schema-merge-allof'
 
-export function isObject(thing: any) {
+export function isObject(thing: any): boolean {
   return typeof thing === 'object' && thing !== null && !Array.isArray(thing)
 }
 
-export function isEmptyObject(thing: any) {
+export function isEmptyObject(thing: any): boolean {
   return isObject(thing) && Object.keys(thing).length === 0
 }
 
-export function hasOwnProperty(obj: any, key: string) {
+export function hasOwnProperty(obj: any, key: string): boolean {
   /**
    * 直接调用`obj.hasOwnProperty`有可能会因为
    * obj 覆盖了 prototype 上的 hasOwnProperty 而产生错误
@@ -36,7 +36,11 @@ export function validateData(schema: any, data: any) {
 }
 
 // function resolveSchema(schema: any, data: any = {}) {}
-export function resolveSchema(schema: Schema, rootSchema = {}, formData = {}) {
+export function resolveSchema(
+  schema: Schema,
+  rootSchema = {},
+  formData = {},
+): Schema {
   if (hasOwnProperty(schema, '$ref')) {
     return resolveReference(schema, rootSchema, formData)
   } else if (hasOwnProperty(schema, 'dependencies')) {
@@ -99,7 +103,7 @@ export function stubExistingAdditionalProperties(
   schema: Schema,
   rootSchema: Schema = {},
   formData: any = {},
-) {
+): Schema {
   // Clone the schema so we don't ruin the consumer's original
   schema = {
     ...schema,
