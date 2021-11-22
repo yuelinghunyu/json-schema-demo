@@ -2,7 +2,7 @@
  * @author dajun.jiang
  * @description props type 定义
  */
-import { PropType, defineComponent } from 'vue'
+import { PropType, defineComponent, DefineComponent } from 'vue'
 export enum SchemaTypes {
   'NUMBER' = 'number',
   'INTEGER' = 'integer',
@@ -74,3 +74,17 @@ export const TypeHelperComponent = defineComponent({
 })
 
 export type CommonFieldType = typeof TypeHelperComponent
+
+const CommonWidgetPropsDefine = {
+  value: {},
+  onChange: {
+    type: Function as PropType<(v: any) => void>,
+    require: true,
+  },
+}
+
+type CommonWidgetDefine = DefineComponent<typeof CommonWidgetPropsDefine>
+
+export interface Theme {
+  SelectionWidget: CommonWidgetDefine
+}

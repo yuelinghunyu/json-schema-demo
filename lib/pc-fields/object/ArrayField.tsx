@@ -1,6 +1,7 @@
 import { defineComponent, PropType } from 'vue'
 import { FiledPropsDefine, Schema } from '../../types/props-types'
 import { useEngineFieldsContext } from '../../hooks/useEngineContext'
+import SelectionWidget from '../widgets/selection'
 
 const ArrayItemWrapper = defineComponent({
   name: 'ArrayItemWrapper',
@@ -63,7 +64,7 @@ export default defineComponent({
       const { EngineFormItem } = context
       const { schema, rootSchema, value } = props
 
-      const isMultiType = Array.isArray(schema.item)
+      const isMultiType = Array.isArray(schema.items)
       const isSelect = schema.items && (schema.items as any).enum
 
       if (isMultiType) {
@@ -95,8 +96,20 @@ export default defineComponent({
             ></EngineFormItem>
           </ArrayItemWrapper>
         ))
+      } else {
+        const enumOptions = (schema as any).items.enum
+        const options = enumOptions.map((e: any) => ({
+          key: e,
+          value: e,
+        }))
+        return (
+          <SelectionWidget
+            onChange={props.onChange}
+            value={props.value}
+            options={options}
+          ></SelectionWidget>
+        )
       }
-      return null
     }
   },
 })
